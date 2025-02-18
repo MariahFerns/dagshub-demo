@@ -18,18 +18,6 @@ y = df['Outcome']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 
-
-# Define the model hyperparameters
-# LogisticRegression
-
-
-# RandomForestClassifier
-rfc_params = {
-    'n_estimators': 100,
-    'max_depth':3,
-    'random_state':42
-}
-
 # Train models
 models = [
     {
@@ -65,6 +53,11 @@ for m in models:
 # Track using MLFlow
 import mlflow
 
+# Track using DagsHub
+import dagshub
+dagshub.init(repo_owner='MariahFerns', repo_name='dagshub-demo', mlflow=True)
+
+
 # Set experiment name
 mlflow.set_experiment('Diabetes Prediction')
 
@@ -86,4 +79,4 @@ for i, m in enumerate(models):
         mlflow.log_metric('f1_score_macro', report['macro avg']['f1-score'])
         
         # log model
-        mlflow.sklearn.log_model(model, 'model')
+        mlflow.sklearn.log_model(model, f'{model_name}')
