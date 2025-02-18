@@ -50,20 +50,22 @@ for m in models:
     reports.append(report)
 
 
-# Track using MLFlow
-import mlflow
+
 
 # Track using DagsHub
 import dagshub
-dagshub.init(repo_owner='MariahFerns', repo_name='dagshub-demo', mlflow=True)
+dagshub.init(repo_owner='MariahFerns', repo_name='dagshub-demo', mlflow=True) # collaborators can access this repo and experiments will be tracked under the same experiment name
 
+
+# Track using MLFlow
+import mlflow
 
 # Set experiment name
 mlflow.set_experiment('Diabetes Prediction')
 
 for i, m in enumerate(models):
     model_name = m['name']
-    model = m['model']
+    model  = m['model']
     params = m['params']
     report = reports[i]
 
@@ -80,3 +82,24 @@ for i, m in enumerate(models):
         
         # log model
         mlflow.sklearn.log_model(model, f'{model_name}')
+
+
+# # Get list of experiments on local mlflow client (not on dagshub - comment dagshub code)
+# from mlflow.tracking import MlflowClient
+
+# client = MlflowClient()
+# print(mlflow.search_experiments())
+
+
+# # Filter runs within experiments and get artifacts using code instead of UI
+# from mlflow.entities import ViewType
+
+# runs = client.search_runs(
+#     experiment_ids='574783491609994501',
+#     filter_string = 'metrics.accuracy > 0.77',
+#     run_view_type = ViewType.ACTIVE_ONLY,
+#     max_results=5
+# )
+
+# print(runs)
+
