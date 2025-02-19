@@ -1,0 +1,37 @@
+# General settings 
+app:
+  name: "Diabetes Prediction"
+  version: "1.0.0"
+  environment: "development" 
+
+# Data settings
+data:
+  raw_data_path: "diabetes.csv"
+  test_size: 0.2
+  random_state: 42
+
+# Model settings
+model1:
+  name: "Logistic Regression"
+  type: LogisticRegression
+  parameters:
+    solver: "liblinear"
+    C: 1
+
+model2:
+  name: "Random Forest Classifier"
+  type: RandomForestClassifier
+  parameters:
+    n_estimators: 100
+    max_depth: 3
+    random_state: 42
+
+# Evaluation settings
+evaluation:
+  metrics:
+    - "accuracy"
+  per_class_metrics:
+    - "recall"
+  macro_avg_metrics:
+    - "f1-score"
+
